@@ -2,11 +2,27 @@ name: ci
 
 on:
   push:
-    branches:
-      - 'main'
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  PUSH_PACKAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
 
 jobs:
-  docker:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag taurus:local
+      - name: Run tests
+        run: docker run taurus:local
+
+  build-and-push-to-dockerhub:
+    if: ${{ $PUSH_PACKAGES }}
+    needs: test
     runs-on: ubuntu-latest
     steps:
       -
