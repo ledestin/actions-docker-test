@@ -21,7 +21,7 @@ jobs:
         run: docker run taurus:local
 
   build-and-push-to-dockerhub:
-    if: ${{ emv.PUSH_PACKAGES }}
+    if: ${{ env.PUSH_PACKAGES }}
     needs: test
     runs-on: ubuntu-latest
     steps:
