@@ -18,9 +18,7 @@ jobs:
         run: docker run taurus:local
 
   build-and-push-to-dockerhub:
-    env:
-      PUSH_PACKAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    if: ${{ env.PUSH_PACKAGES }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs: test
     runs-on: ubuntu-latest
     steps:
