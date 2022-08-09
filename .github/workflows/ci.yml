@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  PUSH_PACKAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -21,6 +18,8 @@ jobs:
         run: docker run taurus:local
 
   build-and-push-to-dockerhub:
+    env:
+      PUSH_PACKAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     if: ${{ env.PUSH_PACKAGES }}
     needs: test
     runs-on: ubuntu-latest
