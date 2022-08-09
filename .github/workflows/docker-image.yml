@@ -15,6 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag taurus:$(date +%s)
+      run: docker build . --file Dockerfile --tag taurus:local
     - name: Run tests inside Docker
-      run: docker run taurus:$(date +%s)
+      run: docker run taurus:local
